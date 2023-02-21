@@ -15,8 +15,7 @@ phases:
       - yarn build
   post_build:
     commands:
-      - echo Uploading artifacts to S3...
-      - aws s3 sync out s3://itchson.com --recursive
+      - echo Build complete...
 artifacts:
   files:
     - '**/*'
