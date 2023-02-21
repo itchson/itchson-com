@@ -16,8 +16,8 @@ phases:
   post_build:
     commands:
       - echo Uploading artifacts to S3...
-      - aws s3 sync out/ s3://itchson.com
+      - aws s3 sync out s3://itchson.com --recursive
 artifacts:
   files:
     - '**/*'
-  base-directory: out
+  base-directory: 'out'
