@@ -2,18 +2,20 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 16
     commands:
-    - echo Installing dependencies...
-    - npm install
+      - echo Installing dependencies...
+      - npm install
   build:
     commands:
-    - echo Building the project...
-    - npm run build
+      - echo Building the project...
+      - npm run build
   post_build:
     commands:
-    - echo Build completed on `succesfully`
+      - echo Uploading artifacts to S3...
+
 artifacts:
   files:
     - "**/*"
-  discard-paths: no
-  base-directory: build
+  base-directory: out
