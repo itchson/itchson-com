@@ -2,20 +2,20 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 16
     commands:
-      - echo Installing dependencies...
-      - npm install
+      - echo Installing dependency...
+      - npm install -g next
+      - yarn
+  pre_build:
+    commands:
+      - printenv > .env
   build:
     commands:
-      - echo Building the project...
-      - npm run build
+      - echo Compiling the Node.js code
+      - yarn build
   post_build:
     commands:
-      - echo Uploading artifacts to S3...
-
+      - echo Build completed on `date`
 artifacts:
   files:
-    - "**/*"
-  base-directory: out
+    - '**/*'
