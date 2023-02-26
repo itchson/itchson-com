@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
+import Faq from './pages/Faq';
 
 const Main = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/faq" element={<Faq />} />
         </Routes>
       </Main>
     </Router>

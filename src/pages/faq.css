@@ -1,0 +1,25 @@
+.faq-container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .faq {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .faq__question {
+    cursor: pointer;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f8e03e;
+    color: #713491;
+    border-radius: 5px;
+  }
+  
+  .faq__question--active {
+    background-color: #fd46d6;
+    color: #f8e03e;
+  }
+  
