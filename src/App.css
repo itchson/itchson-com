@@ -1,9 +1,31 @@
 .App {
+  display: grid;
+  grid-template-areas: 
+    "nav article";
+  grid-template-rows: 100vh;  
+  grid-template-columns: 200px 1fr;
+  margin: 0;
+  overflow: hidden;
+  background-color: #f8e03e;
+}
+
+nav {
+  grid-area: nav;
+  background-color: #713491;
+}
+
+article {
+  grid-area: article;
+}
+
+@media screen and (max-width: 767px) {
+  .App {
     display: grid;
     grid-template-areas: 
-      "nav article";
-    grid-template-rows: 100vh;  
-    grid-template-columns: 200px 1fr;
+      "nav"
+      "article";
+    grid-template-rows: 100px auto;  
+    grid-template-columns: 1fr;
     margin: 0;
     overflow: hidden;
     background-color: #f8e03e;
@@ -17,4 +39,4 @@
   article {
     grid-area: article;
   }
-  
+}
