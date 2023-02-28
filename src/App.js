@@ -13,6 +13,7 @@ const Nav = styled.nav`
 
 const Article = styled.article`
   grid-area: article;
+  height: 100%;
 `;
 
 function App() {

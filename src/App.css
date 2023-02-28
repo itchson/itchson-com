@@ -5,7 +5,7 @@
   grid-template-rows: 100vh;  
   grid-template-columns: 200px 1fr;
   margin: 0;
-  overflow: hidden;
+  overflow-y: hidden;
   background-color: #f8e03e;
 }
 
@@ -16,6 +16,7 @@ nav {
 
 article {
   grid-area: article;
+  overflow-y: auto;
 }
 
 @media screen and (max-width: 767px) {
@@ -24,9 +25,8 @@ article {
     grid-template-areas: 
       "nav"
       "article";
-    grid-template-rows: 100px auto;  
+    grid-template-rows: 100px calc(100vh - 100px);  
     grid-template-columns: 1fr;
-    margin: 0;
     overflow: hidden;
     background-color: #f8e03e;
   }
@@ -38,5 +38,6 @@ article {
   
   article {
     grid-area: article;
+    overflow-y: auto;
   }
 }
