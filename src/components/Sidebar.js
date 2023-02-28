@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../assets/logo.svg';
 import './sidebar.css';
 
 function Sidebar() {
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleMenuClick = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <div className="sidebar">
@@ -17,11 +12,8 @@ function Sidebar() {
         <div className="logo-wrapper">
           <img className="logo" src={Logo} alt="logo" />
         </div>
-        <button className="menu-button" onClick={handleMenuClick}>
-          {isOpen ? 'Close' : 'Menu'}
-        </button>
       </div>
-      <nav className={`nav ${isOpen ? 'open' : ''}`}>
+      <nav className={`nav`}>
       <hr class="nav-line-break" />
         <NavLink to="/" label="HOME" active={location.pathname === '/'} />
         <NavLink to="/projects" label="PROJECTS" active={location.pathname === '/projects'} />
