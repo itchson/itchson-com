@@ -6,6 +6,8 @@ const HomeWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  color: #2f2f2f;
+  top: 10px;
 `;
 
 const Home = () => {

@@ -1,76 +1,44 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
 import Logo from '../assets/logo.svg';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 200px;
-  background-color: #713491;
-  padding: 20px;
-  overflow-y: auto;
-`;
-
-const LogoImg = styled.img`
-  width: 100%;
-  height: auto;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-
-  &::before {
-    content: "";
-    display: block;
-    height: 2px;
-    width: 180px;
-    background-color: #fd46d6;
-    margin-bottom: 20px;
-  }
-`;
-
-const NavLink = styled(Link)`
-  width: 90%;
-  margin-bottom: 10px;
-  padding: 10px 20px;
-  color: #fd46d6;
-  font-size: 20px;
-  font-weight: bold;
-  text-decoration: none;
-  background-color: ${({ active }) => active ? '#11cef6' : '#f8e03e'};
-  border-radius: 5px;
-  transition: background-color 0.4s ease, color 0.4s ease;
-  justify-content: center;
-  display: flex;
-
-  &:hover {
-    background-color: ${({ active }) => active ? '#fd46d6' : '#fd46d6'};
-    color: #f8e03e;
-  }
-`;
+import './sidebar.css';
 
 function Sidebar() {
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleMenuClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <Wrapper>
-      <LogoImg src={Logo} alt="logo" />
-      <Nav>
-        <NavLink to="/" active={location.pathname === '/'}>HOME</NavLink>
-        <NavLink to="/projects" active={location.pathname === '/projects'}>PROJECTS</NavLink>
-        <NavLink to="/blog" active={location.pathname === '/blog'}>BLOG</NavLink>
-        <NavLink to="/faq" active={location.pathname === '/faq'}>FAQ</NavLink>
-      </Nav>
-    </Wrapper>
+    <div className="sidebar">
+      <div className="sidebar-header">
+        <div className="logo-wrapper">
+          <img className="logo" src={Logo} alt="logo" />
+        </div>
+        <button className="menu-button" onClick={handleMenuClick}>
+          {isOpen ? 'Close' : 'Menu'}
+        </button>
+      </div>
+      <nav className={`nav ${isOpen ? 'open' : ''}`}>
+      <hr class="nav-line-break" />
+        <NavLink to="/" label="HOME" active={location.pathname === '/'} />
+        <NavLink to="/projects" label="PROJECTS" active={location.pathname === '/projects'} />
+        <NavLink to="/blog" label="BLOG" active={location.pathname === '/blog'} />
+        <NavLink to="/faq" label="FAQ" active={location.pathname === '/faq'} />
+      </nav>
+    </div>
+  );
+}
+
+function NavLink(props) {
+  const { to, label, active } = props;
+
+  return (
+    <Link to={to} className={`nav-link ${active ? 'active' : ''}`}>
+      {label}
+    </Link>
   );
 }
 

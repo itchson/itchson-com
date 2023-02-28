@@ -5,25 +5,43 @@ import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import Faq from './pages/Faq';
+import './App.css';
 
-const Main = styled.div`
-  display: flex;
+const GridContainer = styled.div`
+  display: grid;
+  overflow: hidden;
+  grid-template-areas: 
+    "nav article";
+  grid-template-rows: 100% 1fr 70px;  
+  grid-template-columns: 200px 1fr 0%;
   height: 100vh;
-  background-color: #2f2f2f;
-  color: white;
+  margin: 0;
+`;
+
+const Nav = styled.nav`
+  grid-area: nav;
+`;
+
+const Article = styled.article`
+  grid-area: article;
+  overflow-y: scroll;
 `;
 
 function App() {
   return (
     <Router>
-      <Main>
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/faq" element={<Faq />} />
-        </Routes>
-      </Main>
+      <GridContainer>
+        <Nav>
+          <Sidebar />
+        </Nav>
+        <Article>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/faq" element={<Faq />} />
+          </Routes>
+        </Article>
+      </GridContainer>
     </Router>
   );
 }
