@@ -5,9 +5,9 @@ const HomeWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  color: #2f2f2f;
-  top: 10px;
+  height: 100%;
+  color: #f8e03e;
+  background-color: #2f2f2f;
 `;
 
 const Home = () => {

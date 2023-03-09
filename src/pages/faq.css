@@ -1,4 +1,8 @@
 .faq-container {
+    display: fixed;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
     padding: 20px;
   }
 

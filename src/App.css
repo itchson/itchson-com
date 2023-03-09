@@ -1,43 +1,100 @@
-.App {
-  display: grid;
-  grid-template-areas: 
-    "nav article";
-  grid-template-rows: 100vh;  
-  grid-template-columns: 200px 1fr;
+/* Base styles */
+body {
   margin: 0;
+  margin-top: 0;
+  padding: 0;
+  background-color: #2f2f2f;
+  color: #f8e03e;
+  overflow-x: hidden;
   overflow-y: hidden;
-  background-color: #f8e03e;
 }
 
-nav {
-  grid-area: nav;
+/* Navbar styles */
+.navbar {
   background-color: #713491;
+  color: #11cef6;
 }
 
-article {
-  grid-area: article;
-  overflow-y: auto;
-}
-
-@media screen and (max-width: 767px) {
-  .App {
+/* Mobile styles */
+@media only screen and (max-width: 767px) {
+  .wrapper {
     display: grid;
     grid-template-areas: 
-      "nav"
-      "article";
-    grid-template-rows: 150px calc(100vh - 150px);  
+      "navbar_grid" 
+      "content_grid";
     grid-template-columns: 1fr;
-    overflow: hidden;
-    background-color: #f8e03e;
+    grid-template-rows: 100px 100vh;
+    align-items: start;
+  }  
+
+  .navbar {
+    grid-area: navbar_grid;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    /*background-color: #fd46d6;*/
+    z-index: 1; 
   }
+
+  .content {
+    grid-area: content_grid;
+    background-color: #f8e03e;
+    width: 100%;
+    height: 100vh;
+    padding-top: 40px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Add any other styles for the content here */
+  }
+}
+
+/* Desktop styles */
+@media only screen and (min-width: 768px) {
+  .wrapper {
+    display: grid;
+    grid-template-areas: "navbar_grid content_grid";
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 100vh;
+  }  
   
-  nav {
-    grid-area: nav;
+  .navbar {
+    grid-area: navbar_grid;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-width: 20%;
     background-color: #713491;
   }
   
-  article {
-    grid-area: article;
+  .content {
+    grid-area: content_grid;
+    padding-left: 40px;
+    background-color: #f8e03e;
+    height: 100vh;
     overflow-y: auto;
+    overflow-x: hidden;
   }
+  
+  
+  
+}
+
+
+/* Article styles */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  color: #11cef6;
+}
+
+.content a {
+  color: #11cef6;
+}
+
+.content p {
+  line-height: 1.5em;
 }

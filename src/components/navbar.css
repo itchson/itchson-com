@@ -1,0 +1,146 @@
+.navbar {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-content: center;
+  align-items: center;
+  background-color: #713491;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100%;
+}
+
+.nav-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  /*background-color: red;*/
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 20%;
+}
+
+.nav-links-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  /*background-color: green;*/
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 20%;
+}
+
+.nav-line-break {
+  width: 80%;
+  border-top: 1px solid #11cef6;
+  margin-bottom: 20px;
+  /*background-color: blue;*/
+}
+
+.nav-link {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px 0px;
+  color: #713491;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #f8e03e;
+  border-radius: 5px;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-link:hover {
+  background-color: #fd46d6;
+  color: #f8e03e;
+}
+
+.nav-link.active {
+  background-color: #11cef6;
+  color: #f8e03e;
+}
+
+/* Mobile styles */
+@media only screen and (max-width: 767px) {
+  .navbar {
+    grid-template-rows: auto auto;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* Set a fixed height */
+    z-index: 1; /* Set a higher z-index than the content */
+    overflow-y: hidden;
+  }
+
+  .nav-logo {
+    position: flex;
+    text-align: center;
+    margin: 0;
+    height: auto;
+    width: 320px;
+  }
+
+  .nav-toggle {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .nav-toggle span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #f8e03e;
+    border-radius: 5px;
+    transform-origin: center center;
+    transition: transform 0.4s ease;
+  }
+
+  .nav-toggle span:first-child {
+    transform: translateY(-8px);
+  }
+
+  .nav-toggle span:nth-child(2) {
+    transform: translateY(0);
+  }
+
+  .nav-toggle span:last-child {
+    transform: translateY(8px);
+  }
+
+  .nav-links-wrapper {
+    display: none;
+    margin-top: 10px;
+    position: static;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+  }
+
+  .nav-line-break {
+    margin: 0;
+  }
+
+  .nav-link
+ {
+    width: 100%;
+    margin: 0;
+  }
+  
+}
