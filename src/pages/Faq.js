@@ -26,7 +26,7 @@ const questions = [
   {
     id: 6,
     question: "How do I contact Itchson?",
-    answer: "You should be able to reach out to me via my social media.",
+    answer: "You should be able to reach out to me via my social media...",
   },
 ];
 
