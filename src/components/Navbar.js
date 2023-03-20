@@ -21,7 +21,7 @@ function Navbar() {
         <span></span>
         <span></span>
       </div>
-      <div className="nav-links-wrapper">
+      <div className={`nav-links-wrapper ${isNavOpen ? 'open' : ''}`}>
         <hr className="nav-line-break" />
         <NavLink to="/" label="HOME" active={location.pathname === '/'} />
         <NavLink to="/blog" label="BLOG" active={location.pathname === '/blog'} />

@@ -10,9 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="wrapper">
-        <div className="navbar">
-          <Navbar />
-        </div>
+        <Navbar />
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
