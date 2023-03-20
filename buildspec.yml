@@ -6,7 +6,6 @@ phases:
       - echo Installing dependencies...
       - npm install -g next
       - yarn
-      - npm install react-twitter-embed
   pre_build:
     commands:
       - printenv > .env
