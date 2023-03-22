@@ -31,6 +31,7 @@ body {
 @media only screen and (max-width: 767px) {
   .content {
     width: 100%;
+    overflow-y: scroll;
   }
 }
 
