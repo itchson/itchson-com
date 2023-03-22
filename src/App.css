@@ -23,6 +23,8 @@ body {
   flex: 1;
   background-color: #f8e03e;
   overflow-y: auto;
+  overflow-x: hidden;
+  overflow: auto;
 }
 
 /* Mobile styles */
@@ -62,3 +64,4 @@ body {
 .content p {
   line-height: 1.5em;
 }
+

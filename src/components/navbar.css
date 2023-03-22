@@ -80,6 +80,7 @@
     height: auto;
     flex-direction: column;
     padding: 10px;
+    
   }
 
   .nav-logo {
@@ -109,3 +110,6 @@
     position: fixed;
   }
 }
+
+
+
