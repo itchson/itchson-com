@@ -7,7 +7,6 @@ const HomeWrapper = styled.div`
   align-items: center;
   height: 100%;
   color: #f8e03e;
-  background-color: #2f2f2f;
   text-align: center;
 `;
 
