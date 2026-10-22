@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ITCHSON</title>
+  <link rel="canonical" href="https://itchson.com/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="description" content="ITCHSON — Developer / Designer" />
+  <meta name="theme-color" content="#0f0f10" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ITCHSON" />
+  <meta property="og:title" content="ITCHSON — Game Designer / Developer" />
+  <meta property="og:description" content="CLICK ANYWHERE IN STARFIELD TO START" />
+  <meta property="og:url" content="https://itchson.com/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ITCHSON — Game Designer / Developer" />
+  <meta name="twitter:description" content="CLICK ANYWHERE IN STARFIELD TO START" />
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="/assets/ships/ff0040.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/press-start-2p-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="/assets/js/runtime.js" defer></script>
+  <script src="/assets/js/favicon.js" defer></script>
+</head>
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div id="jetCursor" class="jet-cursor" aria-hidden="true"></div>
+
+
+  <div class="floating-links">
+    <a class="pixel-link" href="https://x.com/itchson" target="_blank" rel="noopener noreferrer" aria-label="Visit X profile @ITCHSON">𝕏 @ITCHSON</a>
+    <a class="pixel-link" href="mailto:contact@itchson.com" aria-label="Email contact at itchson dot com">✉ CONTACT</a>
+  </div>
+
+  <div id="killCounter" class="floating-kills" aria-live="polite" aria-atomic="true">
+    <span id="killText" class="pixel-link"><span class="icon" aria-hidden="true">☠︎︎</span><span class="count" aria-label="kills">0</span></span>
+  </div>
+
+  <!-- Mobile controls (touch-only): joystick and shoot button -->
+  <div id="mobileControls" class="mobile-controls" aria-hidden="true">
+    <div class="joystick" role="application" aria-label="Move">
+      <div class="joy-ring outer" aria-hidden="true"></div>
+      <div class="joy-ring inner" aria-hidden="true"></div>
+      <div class="joystick-thumb" aria-hidden="true"></div>
+    </div>
+  </div>
+  <button id="shootBtn" class="shoot-btn" aria-label="Shoot">𖦏</button>
+
+  <main class="container" aria-label="ITCHSON — Game Designer / Developer">
+    <h1 class="sr-only">ITCHSON</h1>
+    <div class="logo-container" role="button" tabindex="0" aria-label="ITCHSON pixel logo — reveal letters and reset the game">
+      <!-- I -->
+      <div class="letter letter-i">
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel"></span><span class="pixel"></span>
+        </div>
+      </div>
+
+      <!-- T -->
+      <div class="letter letter-t1">
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="letter letter-c">
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel"></span>
+        </div>
+      </div>
+
+      <!-- H -->
+      <div class="letter letter-h">
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+      </div>
+
+      <!-- S -->
+      <div class="letter letter-s">
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel invisible"></span>
+        </div>
+      </div>
+
+      <!-- O -->
+      <div class="letter letter-o">
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel invisible"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel invisible"></span><span class="pixel"></span><span class="pixel"></span><span class="pixel invisible"></span>
+        </div>
+      </div>
+
+      <!-- N -->
+      <div class="letter letter-n">
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+        <div class="pixel-row">
+          <span class="pixel"></span><span class="pixel invisible"></span><span class="pixel invisible"></span><span class="pixel"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subtitle">GAME DESIGNER / DEVELOPER</div>
+  </main>
+
+  <div class="game-tools" aria-label="Game controls">
+    <span id="gameHint">CLICK THE STARFIELD TO START</span>
+    <button id="pauseGame" class="pixel-link" type="button" aria-pressed="false" aria-label="Pause or resume the game (Escape)">Ⅱ PAUSE</button>
+  </div>
+  <noscript><p class="no-script">The starfield game needs JavaScript. The contact links still work.</p></noscript>
+  <script src="/assets/js/starfield.js" defer></script>
+
+  <script src="/assets/js/logo.js" defer></script>
+
+  <script src="/assets/js/cursor.js" defer></script>
+
+  <script src="/assets/js/touch.js" defer></script>
+</body>
+</html>

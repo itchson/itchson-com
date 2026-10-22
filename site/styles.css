@@ -1,0 +1,375 @@
+@font-face {
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/press-start-2p-latin.woff2') format('woff2');
+}
+
+/* Small refinements retain the original full-screen composition. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.game-tools {
+  position: fixed;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  white-space: nowrap;
+  font: 8px/1.8 'Press Start 2P', monospace;
+  color: #96969f;
+}
+.game-tools button {
+  background: transparent;
+  border: 0;
+  padding: 12px 4px;
+  font-size: 8px;
+  cursor: pointer;
+}
+a:focus-visible, button:focus-visible, .logo-container:focus-visible {
+  outline: 2px solid #e8e8ea;
+  outline-offset: 7px;
+}
+.logo-container:focus-visible .invisible { opacity: 0; }
+body.game-paused.has-jet-cursor, body.game-paused { cursor: default !important; }
+.game-paused #jetCursor { opacity: .45 !important; }
+.no-script { position: fixed; bottom: 65px; padding: 20px; text-align: center; font-size: 12px; }
+@media (max-width: 600px) {
+  .game-tools { gap: 14px; bottom: max(16px, env(safe-area-inset-bottom)); }
+  .game-tools, .game-tools button { font-size: 6px; }
+  .game-tools #gameHint { max-width: 180px; white-space: normal; text-align: center; }
+}
+@media (pointer: coarse) {
+  .game-tools { bottom: max(130px, calc(env(safe-area-inset-bottom) + 120px)); }
+}
+
+:root {
+      --bg: #0f0f10;
+      --fg: #e8e8ea;
+      --muted: #8b8b92;
+      /* Responsive logo sizing */
+      --px-size: clamp(6px, 2.4vw, 10px);
+      --px-gap: clamp(0.5px, 0.6vw, 1px);
+      --row-size: calc(var(--px-size) + 2 * var(--px-gap));
+      --letter-gap: clamp(2px, 1.5vw, 6px);
+      --logo-bottom-gap: clamp(12px, 6vw, 28px);
+      --container-pad: clamp(12px, 4vw, 24px);
+      --subtitle-spacing: clamp(1px, 0.6vw, 2.5px);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: grid;
+      place-items: center;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      caret-color: transparent;
+      overflow: hidden;
+    }
+
+    /* Background starfield canvas */
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    /* Custom pixel jet cursor shown on background only */
+    body.has-jet-cursor { cursor: none; }
+    .jet-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: var(--jet-size, 18px);
+      height: var(--jet-size, 18px);
+      background: no-repeat center / contain;
+      image-rendering: auto;
+      pointer-events: none;
+      z-index: 3;
+      transform: translate(-50%, -50%) translate3d(0, 0, 0) rotate(0deg);
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+      opacity: 0;
+      transition: opacity .15s ease;
+    }
+
+    /* Optional fine-tune for nose spawn alignment (positive pushes further forward) */
+    :root { --jet-nose-adjust: 0px; }
+
+    .jet-cursor .px {
+      position: absolute;
+      background: #ffffff;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: var(--container-pad);
+    }
+
+    .logo-container {
+      display: inline-block;
+      margin-bottom: var(--logo-bottom-gap);
+      cursor: pointer;
+    }
+    /* On touch, default letters visible (guides hidden) unless touching */
+    @media (pointer: coarse) {
+      .logo-container .invisible { opacity: 1; transform: none; }
+      .logo-container.touching .invisible { opacity: 0; transform: scale(0); }
+    }
+
+    .letter {
+      display: inline-block;
+      margin: 0 var(--letter-gap);
+      vertical-align: top;
+      cursor: pointer;
+    }
+
+    .pixel-row {
+      display: block;
+      height: var(--row-size);
+      line-height: var(--row-size);
+    }
+
+    .pixel {
+      width: var(--px-size);
+      height: var(--px-size);
+      display: inline-block;
+      margin: var(--px-gap);
+      border-radius: 0;
+      cursor: pointer;
+    }
+
+    .invisible {
+      opacity: 1;
+      transition: opacity .35s ease, transform .35s ease;
+      transform-origin: center;
+    }
+
+    /* Destroyed guide pixels (non-letter blocks) */
+    .pixel.invisible.destroyed {
+      opacity: 0 !important;
+      transform: scale(0) !important;
+      pointer-events: none;
+    }
+
+      /* Hover to reveal letters: hide guide pixels */
+      .logo-container:hover .invisible {
+        opacity: 0;
+        transform: scale(0);
+      }
+      /* On touch devices, do not stick hover; only reveal while touching */
+      @media (pointer: coarse) {
+        .logo-container:hover .invisible { opacity: 1; transform: none; }
+        .logo-container.touching .invisible { opacity: 0; transform: scale(0); }
+      }
+
+    /* Accent colors per letter */
+    .letter-i .pixel:not(.invisible) { background: #ff0040; }
+    .letter-t1 .pixel:not(.invisible) { background: #00ff80; }
+    .letter-c .pixel:not(.invisible) { background: #0080ff; }
+    .letter-h .pixel:not(.invisible) { background: #ffff00; }
+    .letter-s .pixel:not(.invisible) { background: #ff8000; }
+    .letter-o .pixel:not(.invisible) { background: #ff0080; }
+    .letter-n .pixel:not(.invisible) { background: #8000ff; }
+
+    /* Faint guides for invisible pixels in each letter color */
+    .letter-i .invisible { background: #ff0040; }
+    .letter-t1 .invisible { background: #00ff80; }
+    .letter-c .invisible { background: #0080ff; }
+    .letter-h .invisible { background: #ffff00; }
+    .letter-s .invisible { background: #ff8000; }
+    .letter-o .invisible { background: #ff0080; }
+    .letter-n .invisible { background: #8000ff; }
+
+    /* When all guide blocks are gone, turn letters white unless hovered */
+    .logo-container.letters-white:not(:hover) .pixel:not(.invisible) { background: #ffffff !important; }
+
+    /* Click-to-shake animation */
+    @keyframes pixel-shake {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 0deg)); }
+      50% { transform: translate(calc(var(--tx, 0px) * -0.6), calc(var(--ty, 0px) * -0.6)) rotate(calc(var(--rot, 0deg) * -0.6)); }
+      75% { transform: translate(calc(var(--tx, 0px) * 0.3), calc(var(--ty, 0px) * 0.3)) rotate(calc(var(--rot, 0deg) * 0.3)); }
+    }
+
+    .letter.shake .pixel {
+      animation: pixel-shake 420ms cubic-bezier(.36,.07,.19,.97) 1 both;
+      will-change: transform;
+    }
+
+    .subtitle {
+      font-family: "Press Start 2P", system-ui, sans-serif;
+      font-size: clamp(10px, 1.5vw, 14px);
+      letter-spacing: var(--subtitle-spacing);
+      color: var(--muted);
+    }
+
+    /* Mobile tuning to ensure logo fits without wrapping */
+    @media (max-width: 480px) {
+      :root {
+        --px-size: clamp(4.5px, 3.8vw, 8px);
+        --px-gap: clamp(0.25px, 0.5vw, 0.75px);
+        --letter-gap: clamp(1px, 1.2vw, 4px);
+        --logo-bottom-gap: clamp(10px, 5vw, 20px);
+        --container-pad: clamp(10px, 4vw, 20px);
+      }
+    }
+    @media (max-width: 360px) {
+      :root {
+        --px-size: 4px;
+        --px-gap: 0.25px;
+        --letter-gap: 1px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+
+    /* Floating links stack */
+    .floating-links {
+      position: fixed;
+      right: 16px;
+      top: 14px;
+      bottom: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      z-index: 2;
+    }
+    .pixel-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: "Press Start 2P", system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 1.2px;
+      opacity: .9;
+      transition: color .2s ease, opacity .2s ease;
+    }
+    .pixel-link:hover {
+      color: var(--fg);
+      opacity: 1;
+    }
+
+    /* Top-left kill counter */
+    .floating-kills {
+      position: fixed;
+      left: 16px;
+      top: 14px;
+      bottom: auto;
+      display: none;
+      z-index: 2;
+    }
+    /* Larger skull icon before the number */
+    #killText .icon {
+      font-size: 1.6em;
+      line-height: 1;
+      vertical-align: -0.1em;
+      margin-right: 2px;
+      display: inline-block;
+    }
+    /* Game over: make kill counter white, not muted */
+    .game-over #killCounter .pixel-link { color: #ffffff; opacity: 1; }
+
+    /* Mobile controls (only used on touch-only devices) */
+    :root {
+      --joy-size: clamp(70px, 22vw, 110px);
+      --joy-thumb: calc(var(--joy-size) * 0.42);
+      --joy-border: 2px;
+      --ui-round: 9999px;
+    }
+    .mobile-controls {
+      position: fixed;
+      left: 16px;
+      bottom: 14px;
+      z-index: 2;
+      display: none;
+      touch-action: none;
+    }
+    .joystick {
+      position: relative;
+      width: var(--joy-size);
+      height: var(--joy-size);
+    }
+    .joystick .joy-ring.outer,
+    .joystick .joy-ring.inner {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: transparent;
+      border: 0; /* avoid border affecting sizing alignment */
+      box-shadow: 0 0 0 var(--joy-border) var(--muted);
+    }
+    .joystick .joy-ring.outer { width: 100%; height: 100%; }
+    .joystick .joy-ring.inner { width: 60%; height: 60%; opacity: .7; }
+    .joystick-thumb {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--joy-thumb);
+      height: var(--joy-thumb);
+      transform: translate(-50%, -50%) translate(var(--joy-dx, 0px), var(--joy-dy, 0px));
+      border-radius: 50%;
+      border: var(--joy-border) solid var(--fg);
+      background: transparent;
+      will-change: transform;
+    }
+    .shoot-btn {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 2;
+      display: none;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--muted);
+      border-radius: var(--ui-round);
+      padding: 16px 22px;
+      font-family: "Press Start 2P", system-ui, sans-serif;
+      font-size: clamp(28px, 6.5vw, 56px);
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: none;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .shoot-btn:active { color: var(--fg); border-color: var(--fg); }
+    /* Ensure the icon inside the shoot button is centered and bold */
+    .shoot-btn { display: none; align-items: center; justify-content: center; }
+
+.not-found { text-align: center; padding: 24px; font-family: "Press Start 2P", monospace; line-height: 2; }
+.not-found h1 { color: #00ff80; font-size: clamp(32px, 10vw, 72px); margin-bottom: 24px; }
+.not-found p { color: var(--muted); font-size: 10px; margin-bottom: 24px; }

@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# ITCHSON
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The full-screen interactive landing page for [itchson.com](https://itchson.com): a starfield game, pixel logo, ship cursor, touch controls, and contact links. The page itself is the game.
 
-## Available Scripts
+This refactor preserves the live site's visual identity and gameplay while moving its inline CSS and JavaScript into maintainable local files. It replaces the obsolete Create React App project with a static build that has **zero npm dependencies**. The reference is the actual page deployed in August 2025, rather than the older React placeholder pages.
 
-In the project directory, you can run:
+## Run locally
 
-### `npm start`
+Use **Node.js 24**. No package installation is needed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```sh
+npm test
+npm run build
+npm run preview
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Open [http://127.0.0.1:4173](http://127.0.0.1:4173). `npm start` builds and starts the preview in one command. The preview binds only to localhost; `PORT` can override its default port.
 
-### `npm test`
+Click the starfield to start. The pixel logo resets the game; touch devices retain their joystick and shoot control. The Pause button or Escape pauses/resumes animation, and hidden tabs suspend the animation queue.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project layout
 
-### `npm run build`
+- `site/`: publishable HTML, CSS, game scripts, font, and discovery files.
+- `scripts/`: Node-only build, local preview, and shared security policy.
+- `test/`: build, routing, output isolation, and preview security checks.
+- `deployment/`: CloudFront route and response-header policy templates.
+- `licenses/`: third-party notices, including the Press Start 2P font's SIL Open Font License.
+- `build/`: generated output, ignored by Git. Never edit this directory by hand.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The builder validates its source allowlist, rejects hidden files and symlinks, injects a Content Security Policy, and fingerprints CSS/JavaScript references. Its `.itchson-build` marker identifies generated output and is excluded from deployment artifacts. The source site makes no external font or script requests; the font is self-hosted.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+GitHub Actions runs tests and builds changes. `buildspec.yml` prepares the same artifact for a compatible AWS CodeBuild image. **Neither file, by itself, establishes a working production deployment.**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Review and deployment status
 
-### `npm run eject`
+As of **22 October 2026**, this work is for code review and local verification. **No production deployment or AWS setting change has occurred.** The live site remains the existing full-screen game.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The AWS inspection found private S3 hosting behind CloudFront, but the surviving pipeline references a different repository. See [the security review](docs/SECURITY-REVIEW.md) for evidence and limits, and [the deployment guide](docs/DEPLOYMENT.md) before any release.
