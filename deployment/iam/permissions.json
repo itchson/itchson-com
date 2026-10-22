@@ -1,0 +1,43 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "InspectOnlyWebsiteBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:GetBucketVersioning"
+      ],
+      "Resource": "arn:aws:s3:::itchson.com"
+    },
+    {
+      "Sid": "ReadAndPublishOnlyWebsiteObjects",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:GetObjectTagging",
+        "s3:GetObjectVersionTagging",
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::itchson.com/*"
+    },
+    {
+      "Sid": "WriteOnlyPrivateBackupArchives",
+      "Effect": "Allow",
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::itchson-com-backups-513346603319/backups/*"
+    },
+    {
+      "Sid": "InvalidateOnlyWebsiteDistribution",
+      "Effect": "Allow",
+      "Action": [
+        "cloudfront:GetDistributionConfig",
+        "cloudfront:CreateInvalidation",
+        "cloudfront:GetInvalidation"
+      ],
+      "Resource": "arn:aws:cloudfront::513346603319:distribution/E20TZP2HDNPJLG"
+    }
+  ]
+}

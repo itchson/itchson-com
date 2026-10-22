@@ -1,0 +1,46 @@
+name: Deploy itchson.com
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: itchson-com-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out the release
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Validate before obtaining AWS credentials
+        run: npm test && npm run build
+      - name: Obtain short-lived deployment credentials
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: arn:aws:iam::513346603319:role/itchson-com-github-deploy
+          role-session-name: itchson-com-${{ github.run_id }}
+          role-duration-seconds: 1800
+          aws-region: ap-southeast-2
+          allowed-account-ids: '513346603319'
+      - name: Back up, publish, and refresh CloudFront
+        run: node scripts/deploy.mjs --backup-dir "$RUNNER_TEMP/itchson-backup-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --backup-bucket itchson-com-backups-513346603319
+      - name: Verify the public release
+        run: node scripts/verify-live.mjs
