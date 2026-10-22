@@ -21,18 +21,20 @@ Click the starfield to start. The pixel logo resets the game; touch devices reta
 ## Project layout
 
 - `site/`: publishable HTML, CSS, game scripts, font, and discovery files.
-- `scripts/`: Node-only build, local preview, and shared security policy.
-- `test/`: build, routing, output isolation, and preview security checks.
-- `deployment/`: CloudFront route and response-header policy templates.
+- `scripts/`: Node-only build, local preview, backup/deployment, public-release verification, and shared security policy.
+- `test/`: build and output isolation, browser-server security, game timing, touch controls, and deployment safety checks.
+- `deployment/`: CloudFront route/response-header templates and scoped deployment IAM documents.
 - `licenses/`: third-party notices, including the Press Start 2P font's SIL Open Font License.
 - `build/`: generated output, ignored by Git. Never edit this directory by hand.
 
 The builder validates its source allowlist, rejects hidden files and symlinks, injects a Content Security Policy, and fingerprints CSS/JavaScript references. Its `.itchson-build` marker identifies generated output and is excluded from deployment artifacts. The source site makes no external font or script requests; the font is self-hosted.
 
-GitHub Actions runs tests and builds changes. `buildspec.yml` prepares the same artifact for a compatible AWS CodeBuild image. **Neither file, by itself, establishes a working production deployment.**
+GitHub Actions validates changes. The prepared production workflow deploys pushes to `master` using a dedicated AWS role and short-lived OIDC credentials once the AWS connection is configured. Before publishing, it backs up the current site locally and to the private `itchson-com-backups-513346603319` bucket. It uploads assets before the homepage, preserves old objects, waits for CloudFront invalidation, and verifies the public release. `buildspec.yml` remains an artifact builder; it is not the production connection.
 
 ## Review and deployment status
 
-As of **22 October 2026**, this work is for code review and local verification. **No production deployment or AWS setting change has occurred.** The live site remains the existing full-screen game.
+As of **22 October 2026**, the revamped game has not yet been published to the production bucket. S3 versioning and the separate private backup bucket have been enabled, and the original four site objects have been backed up. The restricted GitHub OIDC role is configured; the first release and automatic deployment verification remain pending.
 
-The AWS inspection found private S3 hosting behind CloudFront, but the surviving pipeline references a different repository. See [the security review](docs/SECURITY-REVIEW.md) for evidence and limits, and [the deployment guide](docs/DEPLOYMENT.md) before any release.
+All **41 automated tests** pass. Chrome mobile emulation covered 320×568, 375×667, and 667×375, including joystick movement, shooting, reset, and portrait/landscape layouts. This is not physical-device or Safari verification.
+
+The existing AWS pipeline references a different repository and must not be reused. See [the security review](docs/SECURITY-REVIEW.md) for evidence and limits, and [the deployment guide](docs/DEPLOYMENT.md) for the new release and recovery procedure.

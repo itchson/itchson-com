@@ -95,7 +95,6 @@
           const br = shootBtn.getBoundingClientRect();
           const joyCenterY = jr.top + jr.height / 2;
           const desiredBottom = Math.max(8, Math.round(window.innerHeight - joyCenterY - br.height / 2));
-          shootBtn.style.right = '16px';
           shootBtn.style.bottom = desiredBottom + 'px';
         } catch (_) {}
       }

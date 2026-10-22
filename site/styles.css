@@ -54,6 +54,16 @@ body.game-paused.has-jet-cursor, body.game-paused { cursor: default !important; 
 @media (pointer: coarse) {
   .game-tools { bottom: max(130px, calc(env(safe-area-inset-bottom) + 120px)); }
 }
+@media (pointer: coarse) and (max-height: 500px) {
+  .game-tools {
+    bottom: max(12px, calc(env(safe-area-inset-bottom) + 12px));
+    max-width: calc(100vw - 280px);
+    gap: 8px;
+    font-size: 6px;
+  }
+  .game-tools #gameHint { max-width: 160px; white-space: normal; text-align: center; }
+  .game-tools button { font-size: 6px; flex-shrink: 0; }
+}
 
 :root {
       --bg: #0f0f10;
@@ -237,18 +247,18 @@ body.game-paused.has-jet-cursor, body.game-paused { cursor: default !important; 
     /* Mobile tuning to ensure logo fits without wrapping */
     @media (max-width: 480px) {
       :root {
-        --px-size: clamp(4.5px, 3.8vw, 8px);
+        --px-size: clamp(4.5px, 2.1vw, 8px);
         --px-gap: clamp(0.25px, 0.5vw, 0.75px);
         --letter-gap: clamp(1px, 1.2vw, 4px);
         --logo-bottom-gap: clamp(10px, 5vw, 20px);
         --container-pad: clamp(10px, 4vw, 20px);
       }
-    }
-    @media (max-width: 360px) {
-      :root {
-        --px-size: 4px;
-        --px-gap: 0.25px;
-        --letter-gap: 1px;
+      .logo-container { display: inline-flex; flex-wrap: nowrap; }
+      .subtitle {
+        font-size: clamp(8px, 2.4vw, 10px);
+        letter-spacing: clamp(.5px, .25vw, 1px);
+        line-height: 1.8;
+        white-space: nowrap;
       }
     }
 
@@ -259,8 +269,8 @@ body.game-paused.has-jet-cursor, body.game-paused { cursor: default !important; 
     /* Floating links stack */
     .floating-links {
       position: fixed;
-      right: 16px;
-      top: 14px;
+      right: max(16px, calc(env(safe-area-inset-right) + 16px));
+      top: max(14px, calc(env(safe-area-inset-top) + 14px));
       bottom: auto;
       display: flex;
       flex-direction: column;
@@ -285,8 +295,8 @@ body.game-paused.has-jet-cursor, body.game-paused { cursor: default !important; 
     /* Top-left kill counter */
     .floating-kills {
       position: fixed;
-      left: 16px;
-      top: 14px;
+      left: max(16px, calc(env(safe-area-inset-left) + 16px));
+      top: max(14px, calc(env(safe-area-inset-top) + 14px));
       bottom: auto;
       display: none;
       z-index: 2;
@@ -311,8 +321,8 @@ body.game-paused.has-jet-cursor, body.game-paused { cursor: default !important; 
     }
     .mobile-controls {
       position: fixed;
-      left: 16px;
-      bottom: 14px;
+      left: max(16px, calc(env(safe-area-inset-left) + 16px));
+      bottom: max(14px, calc(env(safe-area-inset-bottom) + 14px));
       z-index: 2;
       display: none;
       touch-action: none;
@@ -349,8 +359,8 @@ body.game-paused.has-jet-cursor, body.game-paused { cursor: default !important; 
     }
     .shoot-btn {
       position: fixed;
-      right: 16px;
-      bottom: 16px;
+      right: max(16px, calc(env(safe-area-inset-right) + 16px));
+      bottom: max(16px, calc(env(safe-area-inset-bottom) + 16px));
       z-index: 2;
       display: none;
       background: transparent;

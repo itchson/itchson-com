@@ -1,0 +1,7 @@
+{
+  "Url": "https://token.actions.githubusercontent.com",
+  "ClientIDList": ["sts.amazonaws.com"],
+  "Tags": [
+    {"Key": "Purpose", "Value": "GitHub Actions OIDC"}
+  ]
+}
